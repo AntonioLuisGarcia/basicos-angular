@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>user</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-button (click)="home()">Inicio</ion-button>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">user</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <app-user-info *ngFor="let user of users" [user]="user" ></app-user-info>
+</ion-content>

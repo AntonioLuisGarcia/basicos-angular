@@ -16,4 +16,8 @@ export class HomePage {
     this.router.navigate(['/about']);
   }
 
+  public toUsers(){
+    this.router.navigate(['/user']);
+  }
+
 }
