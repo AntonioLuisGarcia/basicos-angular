@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" >
   <ion-toolbar>
     <ion-title>user</ion-title>
   </ion-toolbar>
@@ -12,5 +12,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-user-info *ngFor="let user of users" [user]="user" ></app-user-info>
+  <app-user-info *ngFor="let user of users" [user]="user" 
+  (onCardClicked)="onCardClicked(user)"></app-user-info>
 </ion-content>
