@@ -8,6 +8,7 @@ import { UserPageRoutingModule } from './user-routing.module';
 
 import { UserPage } from './user.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
   imports: [
@@ -15,8 +16,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     IonicModule,
     UserPageRoutingModule,
-    SharedModule
+    SharedModule,
   ],
-  declarations: [UserPage]
+  declarations: 
+  [UserPage,
+  UserInfoComponent]
 })
 export class UserPageModule {}
