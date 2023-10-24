@@ -45,19 +45,8 @@ export class UserPage implements OnInit {
         
         break;
         case 'delete':{
-          /*
-          this.users.deleteUser(info.data).subscribe(async user=>{
-            const options:ToastOptions = {
-            message:"User deleted",
-            duration:1000,
-            position:'bottom',
-            color:'tertiary',
-            cssClass:'card-ion-toast'
-          };
-          const toast = await this.toast.create(options);
-          toast.present();
+          this.userService.deleteUser(info.data).subscribe(async user=>{
         })
-        */
         }
         
         break;
