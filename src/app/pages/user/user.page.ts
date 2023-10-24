@@ -39,19 +39,8 @@ export class UserPage implements OnInit {
       console.log(info);
       switch(info.role){
         case 'ok':{
-          /*
-          this.user.updateUser(info.data).subscribe(async user=>{
-              const options:ToastOptions = {
-              message:"User modified",
-              duration:1000,
-              position:'bottom',
-              color:'tertiary',
-              cssClass:'card-ion-toast'
-            };
-            const toast = await this.toast.create(options);
-            toast.present();
+          this.userService.updateUser(info.data).subscribe(async user=>{
           })
-          */
         }
         
         break;

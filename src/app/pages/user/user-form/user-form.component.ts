@@ -14,6 +14,7 @@ export class UserFormComponent  implements OnInit {
   @Input() set user(_user:User){
     if(_user){
       this.mode = 'Edit';
+      this.form.controls['id'].setValue(_user.id);
       this.form.controls['name'].setValue(_user.name);
       this.form.controls['surname'].setValue(_user.surname);
       this.form.controls['age'].setValue(_user.age);
@@ -24,6 +25,7 @@ export class UserFormComponent  implements OnInit {
     private formBuilder:FormBuilder
   ) { 
     this.form = this.formBuilder.group({
+      id:[null],
       name:['', [Validators.required]],
       surname:['', [Validators.required]],
       age:[0, [Validators.required]]
@@ -31,5 +33,17 @@ export class UserFormComponent  implements OnInit {
   }
 
   ngOnInit() {}
+
+  onCancel(){
+    this._modal.dismiss(null, 'cancel');
+  }
+
+  onSubmit(){
+    this._modal.dismiss(this.form.value, 'ok');
+  } 
+
+  onDelete(){
+    this._modal.dismiss(this.form.value, 'delete');
+  }
 
 }
