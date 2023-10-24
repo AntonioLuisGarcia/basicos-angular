@@ -9,7 +9,7 @@
       {{(mode=='New'?'Usuario nuevo':'Editar usuario')}}
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="mode=='Edit'" color="primary" fill="clear" >
+      <ion-button *ngIf="mode=='Edit'" color="primary" fill="clear" (click)="onDelete()">
         <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
