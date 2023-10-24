@@ -33,6 +33,15 @@ export class UserPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  public onDeleteClicked(user: User){
+    var _user:User = {...user};
+
+    this.userService.deleteUser(_user).subscribe(
+        {next: user=>{
+        }
+      });
+  }
+
   public async onCardClicked(user:User){
     
     var onDismiss = (info:any)=>{
@@ -45,19 +54,8 @@ export class UserPage implements OnInit {
         
         break;
         case 'delete':{
-          /*
-          this.users.deleteUser(info.data).subscribe(async user=>{
-            const options:ToastOptions = {
-            message:"User deleted",
-            duration:1000,
-            position:'bottom',
-            color:'tertiary',
-            cssClass:'card-ion-toast'
-          };
-          const toast = await this.toast.create(options);
-          toast.present();
+          this.userService.deleteUser(info.data).subscribe(async user=>{
         })
-        */
         }
         
         break;
