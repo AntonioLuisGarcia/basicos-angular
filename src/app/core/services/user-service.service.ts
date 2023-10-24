@@ -8,6 +8,7 @@ import { ExceptionCode } from '@capacitor/core';
 })
 export class UserServiceService {
 
+  id:number = 4;//porque tenemos 4 usuarios hasta ahora
   private _users:BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   private users:User[] = [
     {id:1, name:"Antonio Luis", surname:"García Guerrero",age:18},
@@ -45,5 +46,15 @@ export class UserServiceService {
       observer.error(console.log("Error en getUser"))
     }
   })
+  }
+
+  createUser(user:User):Observable<User>{
+    return new Observable(observer =>{
+      var _users = [...this._users.value];
+      user.id = ++this.id;
+      _users.push(user);
+      this._users.next(_users);
+      observer.next(user);
+    })
   }
 }
