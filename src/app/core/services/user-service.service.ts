@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { User } from '../interfaces/User';
+import { ExceptionCode } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
@@ -23,15 +24,26 @@ export class UserServiceService {
   }
 
   updateUser(user:User):Observable<User>{
-    var index = this.users.findIndex(u => u.id = user.id);
+    var users = [...this._users.value]
+    var index = users.findIndex(u => u.id == user.id);
 
-    if(index > 0){
+    if(index >= 0){
       this.users[index] = user;
       this._users.next(this.users);
       return of(user);
     }else{
       return throwError("Usuario no encontrado");
     }
-  
+  }
+
+  getUser(user:User):Observable<User>{
+    return new Observable(observer=>{
+    var _user = this._users.value.findIndex(u => u.id = user.id)
+    if(_user){
+      observer.next(user)  
+    }else{
+      observer.error(console.log("Error en getUser"))
+    }
+  })
   }
 }
