@@ -52,4 +52,20 @@
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
+@keyframes borderAnimation {
+    0% {
+      border-color: #ff5733; // Color inicial del borde 
+    }
+    100% {
+      border-color: #33ff57; // Color final del borde
+    }
+}
