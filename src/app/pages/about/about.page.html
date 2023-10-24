@@ -1,38 +1,38 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Sobre nosotros</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="home()" color="primary" class="botonInicio">Inicio</ion-button>
+    </ion-buttons>
   </ion-toolbar>
-    <ion-button (click)="home()">Inicio</ion-button>
 </ion-header>
 
-<ion-card>
-  <img src="../../../assets/images/DANI.png"/>
-  <ion-card-header>
-    <ion-card-title>Daniel Luque Gallardo</ion-card-title>
-    <ion-card-subtitle>Estudiante  2ºDam</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    Apasionado de la tecnología y del mundo de los deportes
-  </ion-card-content>
-  <ion-button color="light">
-    <a href="https://github.com/daluga0503">GITHUB</a>
-  </ion-button>
-</ion-card>
-
-<br/>
-
-<ion-card>
-  <img src="../../../assets/images/juan.jpg"/>
-  <ion-card-header>
-    <ion-card-title>Antonio Luis García</ion-card-title>
-    <ion-card-subtitle>Estudiante  2ºDam</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    Apasionado de la tecnología y del mundo de los deportes
-  </ion-card-content>
-  <ion-button color="light">
-    <a href="https://github.com/AntonioLuisGarcia">GITHUB</a>
-  </ion-button>
-</ion-card>
+<ion-content>
+  <div class="contenido">
+    <ion-card>
+      <img src="../../../assets/images/DANI.png"/>
+      <ion-card-header>
+        <ion-card-title>Daniel Luque Gallardo</ion-card-title>
+        <ion-card-subtitle>Estudiante 2ºDam</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Apasionado de la tecnología y del mundo de los deportes
+      </ion-card-content>
+      <ion-button color="light" href="https://github.com/daluga0503">GITHUB</ion-button>
+    </ion-card>
+  
+    <ion-card>
+      <img src="../../../assets/images/juan.jpg"/>
+      <ion-card-header>
+        <ion-card-title>Antonio Luis García</ion-card-title>
+        <ion-card-subtitle>Estudiante 2ºDam</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        Apasionado de la tecnología y del mundo de los deportes
+      </ion-card-content>
+      <ion-button color="light" href="https://github.com/AntonioLuisGarcia">GITHUB</ion-button>
+    </ion-card>
+  </div>
+</ion-content>
 
 
