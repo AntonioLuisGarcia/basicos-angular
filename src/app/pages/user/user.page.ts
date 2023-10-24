@@ -84,4 +84,22 @@ export class UserPage implements OnInit {
       }
     });
   }
+
+  onNewUser(){
+    var onDismiss = (info:any)=>{
+      console.log(info);
+      switch(info.role){
+        case 'ok':{
+          this.userService.createUser(info.data).subscribe(async user=>{
+          })
+        }
+        break;
+        default:{
+          console.error("No debería entrar");
+        }
+      }
+    }
+    this.presentForm(null, onDismiss);
+  }
+
 }
