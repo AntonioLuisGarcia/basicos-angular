@@ -33,6 +33,15 @@ export class UserPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  public onDeleteClicked(user: User){
+    var _user:User = {...user};
+
+    this.userService.deleteUser(_user).subscribe(
+        {next: user=>{
+        }
+      });
+  }
+
   public async onCardClicked(user:User){
     
     var onDismiss = (info:any)=>{
