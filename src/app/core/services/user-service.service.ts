@@ -61,7 +61,9 @@ export class UserServiceService {
         observer.error("No se ha podido encontrar");
       }
       observer.complete();
-    }
+    })
+  }
+
   createUser(user:User):Observable<User>{
     return new Observable(observer =>{
       var _users = [...this._users.value];

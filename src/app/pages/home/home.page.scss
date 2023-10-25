@@ -25,3 +25,20 @@
 #container a {
   text-decoration: none;
 }
+
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Esto asegura que el contenedor ocupe toda la altura de la pantalla */
+}
+
+.boton1, .boton2 {
+  margin: 5%; /* Espaciado entre los botones */
+  padding: 15px 30px; /* Aumenta el padding para hacer los botones más grandes */
+  font-size: 18px; /* Aumenta el tamaño de la fuente */
+  background-color: #007bff; /* Cambia el color de fondo, si lo deseas */
+  color: #fff; /* Cambia el color del texto, si lo deseas */
+  border: none; /* Elimina el borde si no lo necesitas */
+  border-radius: 5px; /* Agrega bordes redondeados si lo deseas */
+}
