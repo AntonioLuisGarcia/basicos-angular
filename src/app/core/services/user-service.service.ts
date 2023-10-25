@@ -61,14 +61,17 @@ export class UserServiceService {
         observer.error("No se ha podido encontrar");
       }
       observer.complete();
-    }
-  createUser(user:User):Observable<User>{
-    return new Observable(observer =>{
-      var _users = [...this._users.value];
-      user.id = ++this.id;
-      _users.push(user);
-      this._users.next(_users);
-      observer.next(user);
+    })
+  }
+
+createUser(user:User):Observable<User>{
+  return new Observable(observer =>{
+    var _users = [...this._users.value];
+    user.id = ++this.id;
+    _users.push(user);
+    this._users.next(_users);
+    observer.next(user);
     })
   }
 }
+
