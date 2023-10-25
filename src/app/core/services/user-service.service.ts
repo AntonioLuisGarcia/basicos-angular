@@ -8,12 +8,13 @@ import { ExceptionCode } from '@capacitor/core';
 })
 export class UserServiceService {
 
+  id:number = 4;//porque tenemos 4 usuarios hasta ahora
   private _users:BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   private users:User[] = [
-    {id:1, name:"Antonio Luis", surname:"García Guerrero",age:18},
-    {id:2, name:"Daniel", surname:"Luque Gallardo",age:19},
-    {id:3, name:"Jose", surname:"Perez Perez",age:30},
-    {id:4, name:"Kiko", surname:"Rivera",age:39},
+    {id:0, name:"Antonio Luis", surname:"García Guerrero",age:18},
+    {id:1, name:"Daniel", surname:"Luque Gallardo",age:19},
+    {id:2, name:"Jose", surname:"Perez Perez",age:30},
+    {id:3, name:"Kiko", surname:"Rivera",age:39},
   ];
 
   constructor() { }
@@ -46,4 +47,32 @@ export class UserServiceService {
     }
   })
   }
+
+
+  deleteUser(user:User):Observable<User>{
+    return new Observable(observer=>{
+      var _user = [...this._users.value];
+      var index = _user.findIndex(u => u.id == user.id);
+      if(index>=0){
+        _user =[..._user.slice(0,index), ..._user.slice(index+1)]
+        this._users.next(_user);
+          observer.next(user);
+      }else{
+        observer.error("No se ha podido encontrar");
+      }
+      observer.complete();
+    })
+  }
+
+
+createUser(user:User):Observable<User>{
+  return new Observable(observer =>{
+    var _users = [...this._users.value];
+    user.id = ++this.id;
+    _users.push(user);
+    this._users.next(_users);
+    observer.next(user);
+    })
+  }
 }
+
