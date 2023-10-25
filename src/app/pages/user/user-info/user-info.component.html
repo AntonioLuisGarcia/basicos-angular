@@ -1,4 +1,7 @@
-<ion-content (click)="onCardClick()" (click)="onDeleteClick($event)">
+<ion-content>
+  <ion-button (click)="onCardClick()">Abrir</ion-button>
+  <ion-button (click)="onDeleteClick($event)">Borrar</ion-button>
+
   <ion-label>{{user?.name}}</ion-label>
   <ion-label>{{user?.surname}}</ion-label>
   <ion-label>{{user?.age}}</ion-label>
