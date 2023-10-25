@@ -64,13 +64,15 @@ export class UserServiceService {
     })
   }
 
-  createUser(user:User):Observable<User>{
-    return new Observable(observer =>{
-      var _users = [...this._users.value];
-      user.id = ++this.id;
-      _users.push(user);
-      this._users.next(_users);
-      observer.next(user);
+
+createUser(user:User):Observable<User>{
+  return new Observable(observer =>{
+    var _users = [...this._users.value];
+    user.id = ++this.id;
+    _users.push(user);
+    this._users.next(_users);
+    observer.next(user);
     })
   }
 }
+
