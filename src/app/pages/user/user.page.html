@@ -1,22 +1,20 @@
 <ion-header [translucent]="true" >
   <ion-toolbar>
     <ion-title>user</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="home()" color="primary" class="botonInicio">Inicio</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button (click)="home()">Inicio</ion-button>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">user</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <ion-button fill="clear" aria-label="New User" (click)="onNewUser()">
     <ion-icon slot="icon-only"  color="primary"  name="add-outline" aria-hidden="true"></ion-icon>
   </ion-button>
-
-  <app-user-info *ngFor="let user of users" [user]="user" 
-  (onCardClicked)="onCardClicked(user)"
-  (onDeleteClicked)="onDeleteClicked(user)"></app-user-info>
+  <div class="card-container">
+    <app-user-info *ngFor="let user of users" [user]="user" 
+    (onCardClicked)="onCardClicked(user)"
+    (onDeleteClicked)="onDeleteClicked(user)"></app-user-info>
+  </div>
 </ion-content>
