@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap, throwError } from 'rxjs';
 import { User } from '../interfaces/User';
-import { ExceptionCode } from '@capacitor/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,16 @@ export class UserServiceService {
     {id:3, name:"Kiko", surname:"Rivera",age:39},
   ];
 
-  constructor() { }
+  constructor(
+    private http:HttpClient
+  ) { }
 
   getAll():Observable<User[]>{
-    this._users.next(this.users);
-    return this._users.asObservable();
+    // Sin json server
+    // this._users.next(this.users);
+    // return this._users.asObservable();
+     return this.http.get<User[]>(environment.apiUrl+'/users').pipe(tap((users:any[])=>{
+      this._users.next(users);}));
   }
 
   updateUser(user:User):Observable<User>{
