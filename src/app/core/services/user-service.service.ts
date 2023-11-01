@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap, throwError } from 'rxjs';
 import { User } from '../interfaces/User';
-import { ExceptionCode } from '@capacitor/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,69 +11,97 @@ export class UserServiceService {
 
   id:number = 4;//porque tenemos 4 usuarios hasta ahora
   private _users:BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
-  private users:User[] = [
-    {id:0, name:"Antonio Luis", surname:"García Guerrero",age:18},
-    {id:1, name:"Daniel", surname:"Luque Gallardo",age:19},
-    {id:2, name:"Jose", surname:"Perez Perez",age:30},
-    {id:3, name:"Kiko", surname:"Rivera",age:39},
-  ];
+  public users$:Observable<User[]> = this._users.asObservable();
+  private users:User[] =[];
+  // private users:User[] = [
+  //   {id:0, name:"Antonio Luis", surname:"García Guerrero",age:18},
+  //   {id:1, name:"Daniel", surname:"Luque Gallardo",age:19},
+  //   {id:2, name:"Jose", surname:"Perez Perez",age:30},
+  //   {id:3, name:"Kiko", surname:"Rivera",age:39},
+  // ];
 
-  constructor() { }
+  constructor(
+    private http:HttpClient
+  ) { }
 
   getAll():Observable<User[]>{
-    this._users.next(this.users);
-    return this._users.asObservable();
+    // Sin json server
+    // this._users.next(this.users);
+    // return this._users.asObservable();
+      return this.http.get<User[]>(environment.apiUrl+'/users').pipe(tap((users:any[])=>{
+      this._users.next(users);}));
   }
+
 
   updateUser(user:User):Observable<User>{
-    var users = [...this._users.value]
-    var index = users.findIndex(u => u.id == user.id);
-
-    if(index >= 0){
-      this.users[index] = user;
-      this._users.next(this.users);
-      return of(user);
-    }else{
-      return throwError("Usuario no encontrado");
-    }
+    return new Observable (observer => {
+      this.http.patch<User>(environment.apiUrl+`/users/${user.id}`,user).subscribe(_=>{
+        this.getAll().subscribe(_=>{
+          this.getUser(user.id).subscribe(_user=>{
+            observer.next(_user);
+          })
+        })
+      })
+    })
   }
 
+
+  public getUser(id:number):Observable<User>{
+    return this.http.get<User>(environment.apiUrl+`/users/${id}`);
+  }
+  /*
   getUser(user:User):Observable<User>{
-    return new Observable(observer=>{
-    var _user = this._users.value.findIndex(u => u.id = user.id)
-    if(_user){
-      observer.next(user)  
-    }else{
-      observer.error(console.log("Error en getUser"))
-    }
-  })
+    return this.http.get<User>(environment.apiUrl+`/users/${user.id}`);
   }
-
-
-  deleteUser(user:User):Observable<User>{
-    return new Observable(observer=>{
-      var _user = [...this._users.value];
-      var index = _user.findIndex(u => u.id == user.id);
-      if(index>=0){
-        _user =[..._user.slice(0,index), ..._user.slice(index+1)]
-        this._users.next(_user);
+  */
+  
+  deleteUser(user:User): Observable<User>{
+    return new Observable (observer =>{
+      this.http.delete<User>(environment.apiUrl + `/users/${user.id}`).subscribe(_=>{
+        this.getAll().subscribe(_=>{
           observer.next(user);
-      }else{
-        observer.error("No se ha podido encontrar");
-      }
-      observer.complete();
+        })
+      })
     })
   }
 
+  /*
+  deleteUser(user:User):Observable<User>{
+    return new Observable<User>(obs=>{
+      this.http.delete<User>(environment.apiUrl+`/users/${user.id}`).subscribe(_=>{
+          this.getAll().subscribe(_=>{
+            this.getUser(user).subscribe(_user=>{
+              obs.next(_user);
+            })
+          })})});
+  }
+  */
+  createUser(user:User):Observable<User>{
+    var _user: any = {
+      id: user.id,
+      name: user.name,
+      surname: user.surname,
+      age: user.age
+    }
+    return this.http.post<User>(environment.apiUrl+"/users",_user).pipe(tap(_=>{
+      this.getAll().subscribe();
+    }))
+  }
+  /*
+  createUser(user:User):Observable<User>{
+    return new Observable(observer =>{
+      var _users = [...this._users.value];
+      user.id = ++this.id;
+      _users.push(user);
+      this._users.next(_users);
+      observer.next(user);
+      })
+    }
+  }
+  */
 
-createUser(user:User):Observable<User>{
-  return new Observable(observer =>{
-    var _users = [...this._users.value];
-    user.id = ++this.id;
-    _users.push(user);
-    this._users.next(_users);
-    observer.next(user);
-    })
+
+  public query(q:string):Observable<User[]>{
+    return this.http.get<User[]>(environment.apiUrl+'/users?q='+q);
   }
 }
-
