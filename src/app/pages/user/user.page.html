@@ -13,7 +13,8 @@
     <ion-icon slot="icon-only"  color="primary"  name="add-outline" aria-hidden="true"></ion-icon>
   </ion-button>
   <div class="card-container">
-    <app-user-info *ngFor="let user of users" [user]="user" 
+    <app-user-info *ngFor="let user of users" 
+    [user]="user" 
     (onCardClicked)="onCardClicked(user)"
     (onDeleteClicked)="onDeleteClicked(user)"></app-user-info>
   </div>
