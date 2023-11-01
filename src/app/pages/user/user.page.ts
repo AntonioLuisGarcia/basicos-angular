@@ -38,6 +38,7 @@ export class UserPage implements OnInit {
 
     this.userService.deleteUser(_user).subscribe(
         {next: user=>{
+          this.getAllUsers() //prueba
         }
       });
   }
@@ -49,12 +50,14 @@ export class UserPage implements OnInit {
       switch(info.role){
         case 'ok':{
           this.userService.updateUser(info.data).subscribe(async user=>{
+            await this.getAllUsers();
           })
         }
         
         break;
         case 'delete':{
           this.userService.deleteUser(info.data).subscribe(async user=>{
+            await this.getAllUsers();
         })
         }
         
@@ -91,6 +94,7 @@ export class UserPage implements OnInit {
       switch(info.role){
         case 'ok':{
           this.userService.createUser(info.data).subscribe(async user=>{
+            await this.getAllUsers();
           })
         }
         break;
@@ -100,6 +104,14 @@ export class UserPage implements OnInit {
       }
     }
     this.presentForm(null, onDismiss);
+  }
+
+  private getAllUsers(){
+    this.userService.getAll().subscribe(
+      users => {
+        this.users = users;
+      }
+    );
   }
 
 }
