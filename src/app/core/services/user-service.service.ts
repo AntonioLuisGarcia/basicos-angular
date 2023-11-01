@@ -12,6 +12,13 @@ export class UserServiceService {
   id:number = 4;//porque tenemos 4 usuarios hasta ahora
   private _users:BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   public users$:Observable<User[]> = this._users.asObservable();
+  private users:User[] =[];
+  // private users:User[] = [
+  //   {id:0, name:"Antonio Luis", surname:"García Guerrero",age:18},
+  //   {id:1, name:"Daniel", surname:"Luque Gallardo",age:19},
+  //   {id:2, name:"Jose", surname:"Perez Perez",age:30},
+  //   {id:3, name:"Kiko", surname:"Rivera",age:39},
+  // ];
 
   constructor(
     private http:HttpClient
@@ -24,6 +31,7 @@ export class UserServiceService {
       return this.http.get<User[]>(environment.apiUrl+'/users').pipe(tap((users:any[])=>{
       this._users.next(users);}));
   }
+
 
   updateUser(user:User):Observable<User>{
     return new Observable (observer => {
@@ -43,14 +51,7 @@ export class UserServiceService {
   }
   /*
   getUser(user:User):Observable<User>{
-    return new Observable(observer=>{
-    var _user = this._users.value.findIndex(u => u.id = user.id)
-    if(_user){
-      observer.next(user)  
-    }else{
-      observer.error(console.log("Error en getUser"))
-    }
-  })
+    return this.http.get<User>(environment.apiUrl+`/users/${user.id}`);
   }
   */
   
@@ -66,18 +67,13 @@ export class UserServiceService {
 
   /*
   deleteUser(user:User):Observable<User>{
-    return new Observable(observer=>{
-      var _user = [...this._users.value];
-      var index = _user.findIndex(u => u.id == user.id);
-      if(index>=0){
-        _user =[..._user.slice(0,index), ..._user.slice(index+1)]
-        this._users.next(_user);
-          observer.next(user);
-      }else{
-        observer.error("No se ha podido encontrar");
-      }
-      observer.complete();
-    })
+    return new Observable<User>(obs=>{
+      this.http.delete<User>(environment.apiUrl+`/users/${user.id}`).subscribe(_=>{
+          this.getAll().subscribe(_=>{
+            this.getUser(user).subscribe(_user=>{
+              obs.next(_user);
+            })
+          })})});
   }
   */
   createUser(user:User):Observable<User>{
